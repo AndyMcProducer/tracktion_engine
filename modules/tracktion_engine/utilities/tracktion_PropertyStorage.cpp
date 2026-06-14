@@ -73,6 +73,7 @@ juce::StringRef PropertyStorage::settingToString (SettingID setting)
         case SettingID::maxLatency:                         return "maxLatency";
         case SettingID::newMarker:                          return "newMarker";
         case SettingID::numThreadsForPluginScanning:        return "numThreadsForPluginScanning";
+        case SettingID::araPreferredPlugin:                 return "araPreferredPlugin";
         case SettingID::projectList:                        return "projectList";
         case SettingID::projects:                           return "projects";
         case SettingID::recentProjects:                     return "recentProjects";
@@ -134,7 +135,6 @@ juce::StringRef PropertyStorage::settingToString (SettingID setting)
         case SettingID::passThroughFilters:                 return "passThroughFilters";
         case SettingID::invalid:                            return "invalid";
         case SettingID::addAcidMetadata:                    return "addAcidMetadata";
-        case SettingID::araPreferredPlugin:                 return "araPreferredPlugin";
     }
     return {};
 }

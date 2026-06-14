@@ -312,7 +312,8 @@ namespace tracktion { inline namespace engine
     class RenderOptions;
     class AutomatableParameter;
     class MacroParameterList;
-    class MelodyneFileReader;
+    class ARAFileReader;
+    using MelodyneFileReader = ARAFileReader; // @deprecated
     struct ARADocumentHolder;
     class ClipEffects;
     class WaveAudioClip;
@@ -617,6 +618,8 @@ namespace tracktion { inline namespace engine
 
 #include "model/edit/tracktion_EditUtilities.h"
 
+#include "project/dawproject/tracktion_DAWproject.h"
+
 #if JUCE_ANDROID
  #include "playback/tracktion_ScopedSteadyLoad.h"
 #endif
@@ -655,7 +658,7 @@ namespace tracktion { inline namespace engine
 
 #include "plugins/cmajor/tracktion_CmajorPluginFormat.h"
 
-#include "plugins/ARA/tracktion_MelodyneFileReader.h"
+#include "plugins/ARA/tracktion_ARAFileReader.h"
 
 #if TRACKTION_ENABLE_CONTROL_SURFACES
  #include "control_surfaces/types/tracktion_NovationAutomap.h"

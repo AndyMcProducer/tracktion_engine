@@ -278,8 +278,11 @@ public:
         CRASH_TRACER
         juce::FloatVectorOperations::disableDenormalisedNumberSupport();
 
-        if (! destDir.createDirectory())
+        if (auto res = destDir.createDirectory(); res.failed())
+        {
+            TRACKTION_LOG_ERROR(res.getErrorMessage() + ": " + destDir.getFullPathName());
             return jobHasFinished;
+        }
 
         for (int i = 0; i < archive.getNumFiles(); ++i)
         {
@@ -298,7 +301,18 @@ public:
             juce::File fileCreated;
 
             if (! archive.extractFile (i, destDir, fileCreated, warnAboutOverwrite))
+            {
+                if (fileCreated != juce::File())
+                {
+                    TRACKTION_LOG_ERROR("Unable to extract file to: " + fileCreated.getFullPathName());
+                }
+                else
+                {
+                    TRACKTION_LOG_ERROR("Unable to extract file to dir: " + destDir.getFullPathName());
+                }
+
                 return jobHasFinished;
+            }
 
             if (fileCreated.exists())
                 filesCreated.add (fileCreated);

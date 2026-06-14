@@ -480,7 +480,9 @@ Project::Ptr ProjectManager::createNewProjectFromTemplate (const juce::String& n
     Project::Ptr proj;
     bool aborted = false;
     juce::Array<juce::File> filesCreated;
-    archive.extractAllAsTask (extractPath, false, filesCreated, aborted);
+
+    if (! archive.extractAllAsTask (extractPath, false, filesCreated, aborted))
+        TRACKTION_LOG_ERROR("Unable to extract all files from archive: " + archiveFile.getFullPathName());
 
     if (! aborted)
     {
@@ -535,6 +537,9 @@ Project::Ptr ProjectManager::createNewProjectFromTemplate (const juce::String& n
             }
         }
     }
+
+    if (! proj)
+        TRACKTION_LOG_ERROR("Unable to create new project: " + archiveFile.getFullPathName());
 
     return proj;
 }

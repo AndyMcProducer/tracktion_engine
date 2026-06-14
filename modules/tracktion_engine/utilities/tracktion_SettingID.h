@@ -74,6 +74,7 @@ enum class SettingID
     midiProgramManager,
     newMarker,
     numThreadsForPluginScanning,
+    araPreferredPlugin,
     projectList,
     projects,
     recentProjects,
@@ -135,7 +136,6 @@ enum class SettingID
     passThroughFilters,
     externControlShowClipSlotSelection,
     addAcidMetadata,
-    araPreferredPlugin,
 };
 
 } // namespace engine

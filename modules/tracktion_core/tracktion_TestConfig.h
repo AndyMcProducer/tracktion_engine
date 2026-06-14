@@ -25,6 +25,7 @@
 #define ENGINE_UNIT_TESTS_CLIPBOARD                     1
 #define ENGINE_UNIT_TESTS_CLIPSLOT                      1
 #define ENGINE_UNIT_TESTS_CONSTRAINED_CACHED_VALUE      1
+#define ENGINE_UNIT_TESTS_DAWPROJECT                    1
 #define ENGINE_UNIT_TESTS_DELAY_PLUGIN                  1
 #define ENGINE_UNIT_TESTS_EDIT                          1
 #define ENGINE_UNIT_TESTS_EDITCLIP                      1
@@ -57,6 +58,7 @@
 #define ENGINE_UNIT_TESTS_QUANTISATION_TYPE             1
 #define ENGINE_UNIT_TESTS_WAVE_INPUT_DEVICE             1
 #define ENGINE_UNIT_TESTS_WAVENODE_READAHEAD            1
+#define ENGINE_UNIT_TESTS_PROJECT                       1
 
 // Defined in tracktion_graph
 #define GRAPH_UNIT_TESTS_PLAYHEAD                       1
