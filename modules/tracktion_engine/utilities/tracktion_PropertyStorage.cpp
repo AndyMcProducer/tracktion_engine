@@ -134,6 +134,7 @@ juce::StringRef PropertyStorage::settingToString (SettingID setting)
         case SettingID::passThroughFilters:                 return "passThroughFilters";
         case SettingID::invalid:                            return "invalid";
         case SettingID::addAcidMetadata:                    return "addAcidMetadata";
+        case SettingID::araPreferredPlugin:                 return "araPreferredPlugin";
     }
     return {};
 }

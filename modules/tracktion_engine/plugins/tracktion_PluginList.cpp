@@ -321,6 +321,11 @@ void PluginList::addDefaultTrackPlugins (bool useVCA)
     }
     else
     {
+        // Add EQ (create ValueTree manually since EqualiserPlugin lacks create())
+        juce::ValueTree eqTree (IDs::PLUGIN);
+        eqTree.setProperty (IDs::type, EqualiserPlugin::xmlTypeName, nullptr);
+        insertPlugin (eqTree, -1);
+        
         insertPlugin (VolumeAndPanPlugin::create(), -1);
         insertPlugin (LevelMeterPlugin::create(), -1);
     }

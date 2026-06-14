@@ -8,7 +8,9 @@
     Tracktion Engine uses a GPL/commercial licence - see LICENCE.md for details.
 */
 
-namespace tracktion { inline namespace engine
+namespace tracktion
+{
+inline namespace engine
 {
 
 /** A list of settings the engine will get and set */
@@ -133,6 +135,8 @@ enum class SettingID
     passThroughFilters,
     externControlShowClipSlotSelection,
     addAcidMetadata,
+    araPreferredPlugin,
 };
 
-}} // namespace tracktion { inline namespace engine
+} // namespace engine
+} // namespace tracktion

@@ -8,7 +8,9 @@
     Tracktion Engine uses a GPL/commercial licence - see LICENCE.md for details.
 */
 
-namespace tracktion { inline namespace engine
+namespace tracktion
+{
+inline namespace engine
 {
 
 struct DbTimePair
@@ -24,15 +26,15 @@ struct DbTimePair
 */
 class LevelMeasurer
 {
-public:
+   public:
     //==============================================================================
     LevelMeasurer();
     ~LevelMeasurer();
 
     //==============================================================================
-    void processBuffer (juce::AudioBuffer<float>& buffer, int start, int numSamples);
-    void processMidi (MidiMessageArray& midiBuffer, const float* gains);
-    void processMidiLevel (float level);
+    void processBuffer(juce::AudioBuffer<float>& buffer, int start, int numSamples);
+    void processMidi(MidiMessageArray& midiBuffer, const float* gains);
+    void processMidiLevel(float level);
 
     void clear();
     void clearOverload();
@@ -41,17 +43,17 @@ public:
     //==============================================================================
     enum Mode
     {
-        peakMode     = 0,
-        RMSMode      = 1,
-        sumDiffMode  = 2
+        peakMode = 0,
+        RMSMode = 1,
+        sumDiffMode = 2
     };
 
-    void setMode (Mode);
-    Mode getMode() const noexcept                       { return mode; }
+    void setMode(Mode);
+    Mode getMode() const noexcept { return mode; }
 
-    void setShowMidi (bool showMidi);
+    void setShowMidi(bool showMidi);
 
-    int getNumActiveChannels() const noexcept           { return numActiveChannels; }
+    int getNumActiveChannels() const noexcept { return numActiveChannels; }
 
     //==============================================================================
     struct Client
@@ -63,24 +65,24 @@ public:
         bool getAndClearOverload() noexcept;
         bool getAndClearPeak() noexcept;
         DbTimePair getAndClearMidiLevel() noexcept;
-        DbTimePair getAndClearAudioLevel (int chan) noexcept;
+        DbTimePair getAndClearAudioLevel(int chan) noexcept;
 
         static constexpr auto maxNumChannels = 8;
 
         /** @internal */
-        void setNumChannelsUsed (int) noexcept;
-        void setOverload (int channel, bool hasOverloaded) noexcept;
-        void setClearOverload (bool) noexcept;
-        void setClearPeak (bool) noexcept;
+        void setNumChannelsUsed(int) noexcept;
+        void setOverload(int channel, bool hasOverloaded) noexcept;
+        void setClearOverload(bool) noexcept;
+        void setClearPeak(bool) noexcept;
 
-        void updateAudioLevel (int channel, DbTimePair) noexcept;
-        void updateMidiLevel (DbTimePair) noexcept;
+        void updateAudioLevel(int channel, DbTimePair) noexcept;
+        void updateMidiLevel(DbTimePair) noexcept;
 
-    private:
+       private:
         DbTimePair audioLevels[maxNumChannels];
         bool overload[maxNumChannels] = {};
         DbTimePair midiLevels;
-        std::atomic<int> numChannelsUsed { 0 };
+        std::atomic<int> numChannelsUsed{0};
         bool clearOverload = true;
         bool clearPeak = true;
 
@@ -88,15 +90,21 @@ public:
     };
 
     //==============================================================================
-    void addClient (Client&);
-    void removeClient (Client&);
+    void addClient(Client&);
+    void removeClient(Client&);
 
-    void setLevelCache (float dBL, float dBR) noexcept      { levelCacheL = dBL; levelCacheR = dBR; }
-    std::pair<float, float> getLevelCache() const           { return { levelCacheL, levelCacheR }; }
+    void setLevelCache(float dBL, float dBR) noexcept
+    {
+        levelCacheL = dBL;
+        levelCacheR = dBR;
+    }
+    std::pair<float, float> getLevelCache() const { return {levelCacheL, levelCacheR}; }
 
-private:
+    std::function<void(const float** channels, int numChannels, int numSamples)> processCallback;
+
+   private:
     Mode mode = peakMode;
-    std::atomic<int> numActiveChannels { 1 };
+    std::atomic<int> numActiveChannels{1};
     bool showMidi = false;
     float levelCacheL = -100.0f;
     float levelCacheR = -100.0f;
@@ -105,26 +113,27 @@ private:
     RealTimeSpinLock clientsMutex;
 
     JUCE_DECLARE_WEAK_REFERENCEABLE(LevelMeasurer)
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LevelMeasurer)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LevelMeasurer)
 };
 
 //==============================================================================
 /** A shared level measurer that can be used by several threads to provide a
     total output level
 */
-class SharedLevelMeasurer  : public LevelMeasurer,
-                             public juce::ReferenceCountedObject
+class SharedLevelMeasurer : public LevelMeasurer,
+                            public juce::ReferenceCountedObject
 {
-public:
+   public:
     using Ptr = juce::ReferenceCountedObjectPtr<SharedLevelMeasurer>;
 
-    void startNextBlock (double streamTime);
-    void setSize (int channels, int numSamples);
-    void addBuffer (const juce::AudioBuffer<float>& inBuffer, int startSample, int numSamples);
+    void startNextBlock(double streamTime);
+    void setSize(int channels, int numSamples);
+    void addBuffer(const juce::AudioBuffer<float>& inBuffer, int startSample, int numSamples);
 
     juce::SpinLock spinLock;
     double lastStreamTime = 0;
     juce::AudioBuffer<float> sumBuffer;
 };
 
-}} // namespace tracktion { inline namespace engine
+} // namespace engine
+} // namespace tracktion
